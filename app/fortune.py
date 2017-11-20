@@ -3,10 +3,12 @@ import os
 import random
 import re
 
-PHONE_NUMBER = os.environ['PHONE_NUMBER']
+SNS_TOPIC = os.environ['SNS_TOPIC']
 PERMITTED_CHARACTERS = re.compile(
     r'^[a-zA-Z0-9 _@?!1$"%&\\()*:+;,<\-=.>/\']+$')
-FORTUNE_PREFIX = "Today's fortune: "
+FORTUNE_PREFIX = ""
+
+sns_topic = boto3.resource('sns').Topic(SNS_TOPIC)
 
 
 def permitted_fortune(fortune):
@@ -17,7 +19,7 @@ def permitted_fortune(fortune):
     fortunes all fit comfortably in one SMS, avoiding unexpected bills
     and display weirness on older phones. """
     return PERMITTED_CHARACTERS.match(
-        fortune) and len(fortune) + len(FORTUNE_PREFIX) < 160
+        fortune) and len(fortune) + len(FORTUNE_PREFIX) < 140
 
 
 fortunes = [":( Error loading fortune file."]
@@ -32,4 +34,4 @@ sns_client = boto3.client('sns', region_name='us-west-2')
 
 def lambda_handler(event, context):
     fortune = FORTUNE_PREFIX + random.choice(fortunes)
-    response = sns_client.publish(PhoneNumber=PHONE_NUMBER, Message=fortune)
+    sns_topic.publish(Message=fortune)

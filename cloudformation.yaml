@@ -21,17 +21,20 @@ Resources:
       CodeUri: app
       Environment:
         Variables:
-          PHONE_NUMBER: !Ref PhoneNumber
+          SNS_TOPIC: !Ref SNSTopic
       Events:
         ScheduledEvent:
           Type: Schedule
           Properties:
             Schedule: !Join [' ', ['cron(0', !Ref UTCHour, '* * ? *)']]
       Policies:
-       - AWSLambdaBasicExecutionRole 
-       - Version: '2012-10-17' 
-         Statement:
-           - Effect: Allow
-             Action:
-               - sns:Publish
-             Resource: "*"
+       - SNSPublishMessagePolicy:
+           TopicName: !GetAtt SNSTopic.TopicName
+  SNSTopic:
+    Type: "AWS::SNS::Topic"
+    Properties: 
+      DisplayName: Fortune
+      Subscription:
+        -
+          Endpoint: !Ref PhoneNumber
+          Protocol: sms

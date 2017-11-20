@@ -5,11 +5,11 @@ Description: Send a daily fortune via SMS.
 Parameters: 
   PhoneNumber: 
     Type: String
-    Description: Specify the phone number recipient of the fortune, in E.164 (e.g. +15555550100) format.
+    Description: The phone number recipient of the fortune, in E.164 (e.g. +15555550100) format.
   UTCHour: 
     Type: String
     Default: 0
-    Description: Specify the hour at which to send the daily fortune, in the UTC time zone.
+    Description: The hour at which to send the daily fortune, in the UTC time zone.
           
 Resources:
   FortuneFunction:

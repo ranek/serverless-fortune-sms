@@ -2,7 +2,9 @@
 
 This is an [AWS Lambda](https://aws.amazon.com/lambda/) function that implements a simple [`fortune`](https://en.wikipedia.org/wiki/Fortune_(Unix)) program, like those inclided on many Unixes. Using [Amazon Simple Notification Service](https://aws.amazon.com/sns/), it is able to send an SMS each day to a pre-configured phone number, containing a randomly selected fortune from its database.
 
-The `fortunes` included as a sample here come from Plan 9's [`/lib/fortunes`](https://github.com/9fans/plan9port/blob/master/lib/fortunes), which is covered by the [Lucent Public License](https://github.com/9fans/plan9port/blob/master/LICENSE). 
+The `fortunes` included as a sample here come from Plan 9's [`/lib/fortunes`](https://github.com/9fans/plan9port/blob/master/lib/fortunes), which is covered by the [Lucent Public License](https://github.com/9fans/plan9port/blob/master/LICENSE).
+
+Please note that [SNS only supports SMS messaging in a subset of regions](http://docs.aws.amazon.com/sns/latest/dg/sms_supported-countries.html). Please see the linked support document to ensure you deploy this application in a supported region.
 
 ## Deployment
 
